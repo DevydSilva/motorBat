@@ -1,0 +1,27 @@
+# Dependências
+node_modules
+
+# Build Vite (não versionar — gerar com `npm run build`)
+dist
+dist-ssr
+
+# Cache / ferramentas
+.vite
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ambiente local — versionar só `.env.example`
+
+.env.local
+.env.*.local
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+
+# Opcional (descomente se usar testes com cobertura)
+# coverage
+
+skills-lock.json

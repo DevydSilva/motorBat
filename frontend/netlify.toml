@@ -1,0 +1,26 @@
+# Netlify — BatMotor frontend (Vite + React Router)
+#
+# Repo monorepo (raiz BatMotor):
+#   Site settings → Build & deploy → Base directory = "frontend - mongoDB"
+#   (nesta pasta ficam este ficheiro, package.json e dist após build)
+#
+# Só esta pasta como raiz do site: Base directory em branco.
+#
+# VITE_* são injetadas no JavaScript pelo Vite apenas no BUILD — têm de existir aqui ou
+# em Site settings → Environment variables antes de "Deploy site".
+
+[build]
+  command = "npm ci && npm run build"
+  publish = "dist"
+
+# URL pública HTTPS da API (sem barra no fim). Ajusta se o teu backend for outro.
+# Podes também definir só no painel Netlify (sobrepõe / complementa esta secção).
+[build.environment]
+  VITE_API_URL = "https://batmotor-api-w3ad.onrender.com"
+  VITE_USE_MOCK = "false"
+
+# SPA: /login, /produtos, etc. — sem isto o Netlify devolve 404 em rotas directas
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

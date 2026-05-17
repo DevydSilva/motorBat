@@ -1,0 +1,51 @@
+/**
+ * Correções de legibilidade para campos de entrada.
+ * Escopo principal: modal de produto + formulários com form-control.
+ */
+
+:root {
+  --bm-input-text: #0f172a;
+  --bm-input-placeholder: #64748b;
+}
+
+.add-product-modal input,
+.add-product-modal textarea,
+.add-product-modal select,
+.add-product-modal .form-control {
+  color: var(--bm-input-text) !important;
+  -webkit-text-fill-color: var(--bm-input-text) !important;
+  caret-color: var(--bm-input-text);
+}
+
+.add-product-modal input::placeholder,
+.add-product-modal textarea::placeholder,
+.add-product-modal .form-control::placeholder {
+  color: var(--bm-input-placeholder) !important;
+  -webkit-text-fill-color: var(--bm-input-placeholder) !important;
+  opacity: 1;
+}
+
+.add-product-modal input:-webkit-autofill,
+.add-product-modal input:-webkit-autofill:hover,
+.add-product-modal input:-webkit-autofill:focus,
+.add-product-modal textarea:-webkit-autofill,
+.add-product-modal textarea:-webkit-autofill:hover,
+.add-product-modal textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--bm-input-text) !important;
+  box-shadow: 0 0 0 1000px #ffffff inset !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+.app-body .form-control,
+.app-body input,
+.app-body textarea,
+.app-body select {
+  color: var(--bm-input-text);
+}
+
+.app-body .form-control::placeholder,
+.app-body input::placeholder,
+.app-body textarea::placeholder {
+  color: var(--bm-input-placeholder);
+  opacity: 1;
+}

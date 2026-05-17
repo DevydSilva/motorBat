@@ -1,0 +1,336 @@
+/**
+ * botao.css — fornecedores, modais e toolbars Batmotor (cores estáveis vs .btn Bootstrap/AdminLTE).
+ * Carregar por último entre as folhas globais em main.jsx.
+ */
+
+button.suppliers-form__btn-cancel,
+.suppliers-form__btn-cancel {
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 0.55rem 1.15rem;
+  color: #475569;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+  cursor: pointer;
+}
+
+button.suppliers-form__btn-cancel:hover,
+.suppliers-form__btn-cancel:hover {
+  background: #f8fafc;
+  color: #334155;
+}
+
+button.suppliers-form__btn-save,
+.suppliers-form__btn-save {
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 0.55rem 1.25rem;
+  color: #fff;
+  background: #1e3a5f;
+  border: none;
+  cursor: pointer;
+}
+
+button.suppliers-form__btn-save:hover:not(:disabled),
+.suppliers-form__btn-save:hover:not(:disabled) {
+  background: #172554;
+}
+
+button.suppliers-form__btn-save:disabled,
+.suppliers-form__btn-save:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.suppliers-page__btn-outline {
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  color: #475569;
+  background: #fff;
+  border: 1px solid #cbd5e1;
+}
+
+.suppliers-page__btn-outline:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #334155;
+}
+
+.suppliers-page__btn-primary {
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  color: #fff;
+  background: #1e3a5f;
+  border: none;
+}
+
+.suppliers-page__btn-primary:hover {
+  background: #172554;
+  color: #fff;
+}
+
+.suppliers-data-table__icon-btn {
+  border: none;
+  background: transparent;
+  color: #64748b;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.suppliers-data-table__icon-btn:hover {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.suppliers-data-table__icon-btn--danger:hover {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.suppliers-page__page-btn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 0.5rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: #64748b;
+  font-weight: 600;
+  font-size: 0.875rem;
+  cursor: pointer;
+}
+
+.suppliers-page__page-btn:hover:not(:disabled) {
+  background: #f1f5f9;
+  color: #334155;
+}
+
+.suppliers-page__page-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.suppliers-page__page-btn.is-active {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+button.suppliers-import-submit.btn {
+  border-radius: 12px;
+  font-weight: 700;
+  padding: 0.65rem 1rem;
+  box-shadow: none;
+}
+
+button.suppliers-import-submit.btn:disabled {
+  background: #64748b !important;
+  color: #cbd5e1 !important;
+  border: 1px solid #475569 !important;
+  opacity: 1;
+  cursor: not-allowed;
+}
+
+button.suppliers-import-submit.btn:not(:disabled) {
+  background: #475569 !important;
+  color: #f8fafc !important;
+  border: 1px solid #334155 !important;
+}
+
+button.suppliers-import-submit.btn:not(:disabled):hover {
+  background: #334155 !important;
+  color: #fff !important;
+  border-color: #1e293b !important;
+}
+
+.suppliers-docs-row__browse {
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.4rem 1rem;
+  background: #1e3a5f;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.suppliers-docs-row__browse:hover {
+  background: #172554;
+  color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+ * Toolbar / ações: classe `.btn` do Bootstrap + classe Batmotor.
+ * main.min.css (AdminLTE) define --bs-btn-* e pode ganhar sobre app.css,
+ * deixando texto claro (#fff) com fundo claro. Forçamos fundo e cor aqui.
+ * -------------------------------------------------------------------------- */
+
+button.btn.suppliers-page__btn-primary,
+button.suppliers-page__btn-primary {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
+  background-color: #1e3a5f !important;
+  background-image: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+button.btn.suppliers-page__btn-primary:hover,
+button.suppliers-page__btn-primary:hover {
+  background-color: #172554 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
+}
+
+button.btn.suppliers-page__btn-outline,
+button.suppliers-page__btn-outline {
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569;
+  background-color: #fff !important;
+  background-image: none !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+button.btn.suppliers-page__btn-outline:hover,
+button.suppliers-page__btn-outline:hover {
+  background-color: #f8fafc !important;
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155;
+  border-color: #94a3b8 !important;
+}
+
+button.btn.products-catalog-page__btn-primary,
+button.products-catalog-page__btn-primary {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
+  background-color: #1e3a8a !important;
+  background-image: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+button.btn.products-catalog-page__btn-primary:hover,
+button.products-catalog-page__btn-primary:hover {
+  background-color: #172554 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
+}
+
+button.btn.products-catalog-page__btn-outline,
+button.products-catalog-page__btn-outline {
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569;
+  background-color: #fff !important;
+  background-image: none !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+button.btn.products-catalog-page__btn-outline:hover,
+button.products-catalog-page__btn-outline:hover {
+  background-color: #f8fafc !important;
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155;
+  border-color: #94a3b8 !important;
+}
+
+button.btn.products-inventory-page__btn-primary,
+button.products-inventory-page__btn-primary {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
+  background-color: #1d4ed8 !important;
+  background-image: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+button.btn.products-inventory-page__btn-primary:hover,
+button.products-inventory-page__btn-primary:hover {
+  background-color: #1e40af !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
+}
+
+button.btn.products-inventory-page__btn-outline,
+button.products-inventory-page__btn-outline {
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569;
+  background-color: #fff !important;
+  background-image: none !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+button.btn.products-inventory-page__btn-outline:hover,
+button.products-inventory-page__btn-outline:hover {
+  background-color: #f8fafc !important;
+  color: #334155 !important;
+  -webkit-text-fill-color: #334155;
+  border-color: #94a3b8 !important;
+}
+
+button.btn.movements-estocae__btn-save,
+button.movements-estocae__btn-save {
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
+  background-color: #1e3a8a !important;
+  background-image: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+button.btn.movements-estocae__btn-save:hover:not(:disabled),
+button.movements-estocae__btn-save:hover:not(:disabled) {
+  background-color: #172554 !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
+}
+
+button.btn.movements-estocae__btn-cancel,
+button.movements-estocae__btn-cancel {
+  color: #64748b !important;
+  -webkit-text-fill-color: #64748b;
+  background-color: #fff !important;
+  background-image: none !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+button.btn.movements-estocae__btn-cancel:hover,
+button.movements-estocae__btn-cancel:hover {
+  background-color: #f8fafc !important;
+}
+
+button.btn.movements-estocae__btn-export,
+button.movements-estocae__btn-export {
+  color: #475569 !important;
+  -webkit-text-fill-color: #475569;
+  background-color: #fff !important;
+  background-image: none !important;
+  border: 1px solid #cbd5e1 !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+button.btn.movements-estocae__btn-export:hover,
+button.movements-estocae__btn-export:hover {
+  background-color: #f8fafc !important;
+}

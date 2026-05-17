@@ -1,0 +1,16 @@
+# Blueprint Render — Static Site (React + Vite)
+# Root Directory no painel do Render: pasta deste frontend (ex.: "frontend - mongoDB")
+# https://render.com/docs/static-sites
+
+services:
+  - type: web
+    name: batmotor-frontend-mongodb
+    runtime: static
+    rootDir: frontend - mongoDB
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_USE_MOCK
+        value: "false"
+      - key: VITE_API_URL
+        value: https://batmotor-api-w3ad.onrender.com

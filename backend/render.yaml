@@ -1,0 +1,29 @@
+# Blueprint Render — Web Service (Node)
+# No painel: New + Blueprint → cola este ficheiro ou liga o repositório com rootDir = backend
+# https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: batmotor-api-supabase
+    runtime: node
+    plan: free
+    region: oregon
+    rootDir: backend
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_VERSION
+        value: "20.18.0"
+      - key: DATABASE_URL
+        sync: false
+      - key: BATMOTOR_RUN_SCHEMA
+        value: "false"
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 8h
+      - key: CORS_ORIGINS
+        sync: false
+      - key: CORS_ALLOW_NETLIFY
+        value: "true"

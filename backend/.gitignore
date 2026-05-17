@@ -1,0 +1,19 @@
+node_modules
+
+# Segredos e ambiente local — versione .env.example e docker-compose.yml para o time.
+.env
+# Certificado RDS (descarregado localmente; não versionar)
+global-bundle.pem
+.env.local
+.env.*.local
+
+# Artefactos gerados em src/generated (ex.: cliente Prisma). README.md permanece versionado.
+/src/generated/**
+!/src/generated/README.md
+
+#docker-compose.yml
+
+# Coleção Postman com credenciais? Descomente a linha abaixo para não versionar a pasta.
+# postman/
+
+skills-lock.json

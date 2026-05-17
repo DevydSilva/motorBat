@@ -1,0 +1,314 @@
+{
+	"info": {
+		"_postman_id": "a1b2c3d4-batmotor-api",
+		"name": "BatMotor API",
+		"description": "Coleção HTTP para testar a API MongoDB (`backend_mongoDB`).\n\n**Fluxo típico:**\n1. Arranque a API (`npm run dev`) e o MongoDB.\n2. (Opcional) `npm run db:seed` — cria perfis e utilizadores de exemplo.\n3. Execute **POST Login** — o script de testes grava o JWT na variável de coleção `token`.\n4. Os restantes pedidos usam **Authorization: Bearer {{token}}** ao nível da pasta (exceto login).\n\n**Variáveis da coleção:** `baseUrl` (ex.: `http://localhost:3000`), `token` (preenchido pelo login), `loginEmail` / `loginSenha` (credenciais seed por defeito), e IDs (`fornecedor_id`, `materia_prima_id`, …) — substitua por **ObjectIds hex de 24 caracteres** reais após criar/listar registos na API (os valores `1` são apenas marcadores; em MongoDB os IDs têm outro formato).\n\n**Documentação de rotas:** `src/routes/index.ts`.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{ "key": "baseUrl", "value": "http://localhost:3000" },
+		{ "key": "token", "value": "" },
+		{ "key": "loginEmail", "value": "admin@batmotor.com" },
+		{ "key": "loginSenha", "value": "adminbatmotor" },
+		{ "key": "fornecedor_id", "value": "1" },
+		{ "key": "materia_prima_id", "value": "1" },
+		{ "key": "usuario_id", "value": "1" },
+		{ "key": "perfil_id", "value": "1" },
+		{ "key": "modulo_id", "value": "1" },
+		{ "key": "movimentacao_id", "value": "1" }
+	],
+	"item": [
+		{
+			"name": "01 — Autenticação",
+			"description": "Rota **pública**. Só o login; não envia Bearer. Após 200, o script guarda `token` na coleção.",
+			"item": [
+				{
+					"name": "POST Login (salva token)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const j = pm.response.json();",
+									"    if (j.token) {",
+									"        pm.collectionVariables.set('token', j.token);",
+									"        console.log('Token gravado em {{token}}');",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": { "type": "noauth" },
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"{{loginEmail}}\",\n  \"senha\": \"{{loginSenha}}\"\n}"
+						},
+						"url": "{{baseUrl}}/auth/login",
+						"description": "`POST /auth/login` — corpo JSON com `email` e `senha`. Resposta inclui `token` e `user`.\n\nAjuste `loginEmail` e `loginSenha` nas variáveis da coleção (valores padrão coincidem com `scripts/seed.ts`).\n\n**Script de testes:** em resposta 200, copia `j.token` para a variável `token` da coleção.\n\nJSON válido: aspas duplas nas chaves/strings; sem vírgula antes do `}` final."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "02 — Almoxarifado",
+			"description": "Fornecedores, matérias-prima, vínculos, movimentações e estoque. Requer **Bearer** (herdado desta pasta). Escrita de fornecedor/matéria/movimentação: perfis **ADMIN** ou **GERENTE** conforme `routes/index.ts`.",
+			"auth": {
+				"type": "bearer",
+				"bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+			},
+			"item": [
+				{
+					"name": "POST Fornecedor",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Fornecedor Exemplo LTDA\",\n  \"cnpj\": \"11222333000181\",\n  \"email\": \"contato@fornecedor.com\",\n  \"telefone\": \"11999990000\"\n}"
+						},
+						"url": "{{baseUrl}}/fornecedores",
+						"description": "`POST /fornecedores` — cria fornecedor; CNPJ único. Copie o `_id` devolvido para a variável `fornecedor_id` se for usar nos pedidos seguintes."
+					},
+					"response": []
+				},
+				{
+					"name": "GET Fornecedores",
+					"request": {
+						"method": "GET",
+						"url": "{{baseUrl}}/fornecedores",
+						"description": "`GET /fornecedores` — lista todos (qualquer utilizador autenticado)."
+					},
+					"response": []
+				},
+				{
+					"name": "GET Fornecedor por id",
+					"request": {
+						"method": "GET",
+						"url": "{{baseUrl}}/fornecedores/{{fornecedor_id}}",
+						"description": "`GET /fornecedores/:id` — substitua `fornecedor_id` por um ObjectId válido (ex.: copiado do GET lista ou do POST)."
+					},
+					"response": []
+				},
+				{
+					"name": "POST Matéria-prima",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Parafuso 10mm\",\n  \"categoria\": \"Fixação\",\n  \"unidade\": \"UN\",\n  \"estoque_minimo\": 100,\n  \"ativo\": true\n}"
+						},
+						"url": "{{baseUrl}}/materia-prima",
+						"description": "`POST /materia-prima` — cria insumo. Atualize `materia_prima_id` na coleção com o id real para movimentações e vínculos."
+					},
+					"response": []
+				},
+				{
+					"name": "GET Matérias-prima",
+					"request": {
+						"method": "GET",
+						"url": "{{baseUrl}}/materia-prima",
+						"description": "`GET /materia-prima` — lista com filtros opcionais na query (`categoria`, `busca`, `ativo`); ver controller."
+					},
+					"response": []
+				},
+				{
+					"name": "POST Matéria-fornecedor (vínculo)",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"materia_prima_id\": {{materia_prima_id}},\n  \"fornecedor_id\": {{fornecedor_id}}\n}"
+						},
+						"url": "{{baseUrl}}/materia-fornecedor",
+						"description": "`POST /materia-fornecedor` — liga matéria a fornecedor. Os IDs no body devem ser strings ObjectId válidas (no raw, sem aspas nos placeholders numéricos pode falhar — use ids reais em formato string se necessário)."
+					},
+					"response": []
+				},
+				{
+					"name": "POST Movimentação (ENTRADA)",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"materia_prima_id\": {{materia_prima_id}},\n  \"tipo\": \"ENTRADA\",\n  \"quantidade\": 50,\n  \"motivo\": \"Compra inicial\"\n}"
+						},
+						"url": "{{baseUrl}}/movimentacao",
+						"description": "`POST /movimentacao` — rota com **JWT opcional** nas definições da API; com Bearer usa o utilizador do token. Tipos: `ENTRADA`, `SAIDA`, `AJUSTE`. Sem token, o body deve incluir `usuario_id` (funcionário ativo)."
+					},
+					"response": []
+				},
+				{
+					"name": "GET Movimentações",
+					"request": {
+						"method": "GET",
+						"url": "{{baseUrl}}/movimentacao",
+						"description": "`GET /movimentacao` — lista histórico com populate de matéria e utilizador."
+					},
+					"response": []
+				},
+				{
+					"name": "GET Estoque atual",
+					"request": {
+						"method": "GET",
+						"url": "{{baseUrl}}/estoque-atual",
+						"description": "`GET /estoque-atual` — saldos agregados por matéria-prima (`EstoqueAtual`)."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "03 — Usuários (ADMIN)",
+			"description": "Gestão de utilizadores. Requer token de utilizador com papel **ADMIN** ou **GERENTE** na base (rotas usam `requireRoleFromDb` em `/users`).",
+			"auth": {
+				"type": "bearer",
+				"bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+			},
+			"item": [
+				{
+					"name": "GET Usuários",
+					"request": {
+						"method": "GET",
+						"url": "{{baseUrl}}/users",
+						"description": "`GET /users` — lista utilizadores com perfis (ADMIN/GERENTE)."
+					},
+					"response": []
+				},
+				{
+					"name": "POST Usuário",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Funcionário Teste\",\n  \"email\": \"funcionario@exemplo.com\",\n  \"senha\": \"senhaForte123\",\n  \"cpf\": \"52998224725\",\n  \"ativo\": true\n}"
+						},
+						"url": "{{baseUrl}}/users",
+						"description": "`POST /users` — cria conta; opcionalmente `perfil_role` GERENTE ou FUNCIONARIO. Não permite criar ADMIN por esta rota."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "04 — Config (ADMIN)",
+			"description": "Perfis, módulos, vínculos user-perfil e permissões módulo. Rotas restritas a **ADMIN** na API.",
+			"auth": {
+				"type": "bearer",
+				"bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+			},
+			"item": [
+				{
+					"name": "POST Perfil",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"role\": \"GERENTE\",\n  \"descricao\": \"Gerência (exemplo Postman)\"\n}"
+						},
+						"url": "{{baseUrl}}/perfil",
+						"description": "`POST /perfil` — cria perfil; regra extra: só um GERENTE no sistema (serviço)."
+					},
+					"response": []
+				},
+				{
+					"name": "GET Perfis",
+					"request": {
+						"method": "GET",
+						"url": "{{baseUrl}}/perfil",
+						"description": "`GET /perfil` — lista perfis."
+					},
+					"response": []
+				},
+				{
+					"name": "POST Módulo",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Almoxarifado\",\n  \"descricao\": \"Gestão de estoque\"\n}"
+						},
+						"url": "{{baseUrl}}/modulos",
+						"description": "`POST /modulos` — cria módulo."
+					},
+					"response": []
+				},
+				{
+					"name": "POST User-perfil (vincular)",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"usuario_id\": {{usuario_id}},\n  \"perfil_id\": {{perfil_id}}\n}"
+						},
+						"url": "{{baseUrl}}/user-perfil",
+						"description": "`POST /user-perfil` — associa utilizador a perfil. Preencha `usuario_id` e `perfil_id` com ObjectIds reais (GET `/users`, GET `/perfil`)."
+					},
+					"response": []
+				},
+				{
+					"name": "POST Permissão módulo",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"perfil_id\": {{perfil_id}},\n  \"modulo_id\": {{modulo_id}},\n  \"pode_ler\": true,\n  \"pode_criar\": true,\n  \"pode_atualizar\": false,\n  \"pode_excluir\": false\n}"
+						},
+						"url": "{{baseUrl}}/permissao-modulo",
+						"description": "`POST /permissao-modulo` — define CRUD por par (perfil, módulo)."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "05 — Teste (ADMIN)",
+			"description": "Endpoints de demonstração do modelo `Teste`; só **ADMIN**.",
+			"auth": {
+				"type": "bearer",
+				"bearer": [{ "key": "token", "value": "{{token}}", "type": "string" }]
+			},
+			"item": [
+				{
+					"name": "POST Teste",
+					"request": {
+						"method": "POST",
+						"header": [{ "key": "Content-Type", "value": "application/json" }],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Registro Teste\",\n  \"email\": \"teste@exemplo.com\",\n  \"senha\": \"qualquer\"\n}"
+						},
+						"url": "{{baseUrl}}/teste",
+						"description": "`POST /teste` — cria registo no modelo de exemplo (não é o fluxo real de utilizadores)."
+					},
+					"response": []
+				},
+				{
+					"name": "GET Teste",
+					"request": {
+						"method": "GET",
+						"url": "{{baseUrl}}/teste",
+						"description": "`GET /teste` — lista registos de teste."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

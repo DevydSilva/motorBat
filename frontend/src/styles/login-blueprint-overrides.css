@@ -1,0 +1,112 @@
+/*
+ * Sobrescreve main.min.css / Bootstrap na rota /login.
+ * Importar só em LoginPage.jsx para vir depois no bundle e usar !important onde o template força estilo.
+ */
+.login-batmotor__main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html.login-view,
+html.login-view body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  min-height: 100dvh;
+}
+
+#root:has(.login-batmotor--blueprint) {
+  min-height: 100dvh;
+  display: block;
+}
+
+/* Card mais abaixo: mais padding-top que em baixo (centro visual mais baixo na viewport) */
+.login-batmotor--blueprint .login-batmotor__center-wrap {
+  padding-top: max(env(safe-area-inset-top, 0px), clamp(4.75rem, 24vh, 12rem)) !important;
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), clamp(0.65rem, 3vh, 1.5rem)) !important;
+  padding-left: max(env(safe-area-inset-left, 0px), clamp(10px, 4vw, 28px)) !important;
+  padding-right: max(env(safe-area-inset-right, 0px), clamp(10px, 4vw, 28px)) !important;
+}
+
+.login-batmotor--blueprint .login-batmotor__input.login-batmotor__input--blueprint {
+  min-height: 2.35rem !important;
+  padding-top: 0.34rem !important;
+  padding-bottom: 0.34rem !important;
+  background-color: #e8edf2 !important;
+  border: 1.5px solid #002d5b !important;
+  color: #001a33 !important;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.login-batmotor--blueprint .login-batmotor__input.login-batmotor__input--blueprint::placeholder {
+  color: #002d5b !important;
+  font-style: italic !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  opacity: 1 !important;
+}
+
+.login-batmotor--blueprint
+  button.login-batmotor__btn.login-batmotor__btn--submit.login-batmotor__btn--blueprint {
+  background: linear-gradient(90deg, #004080 0%, #1a1a1a 100%) !important;
+  background-image: linear-gradient(90deg, #004080 0%, #1a1a1a 100%) !important;
+  color: #fff !important;
+  border: none !important;
+  width: 100% !important;
+  margin-top: 0.12rem !important;
+  padding: 0.52rem 0.85rem !important;
+}
+
+.login-batmotor--blueprint .login-batmotor__field-icon.login-batmotor__field-icon--blueprint {
+  color: #002d5b !important;
+  opacity: 1 !important;
+}
+
+.login-batmotor--blueprint .login-batmotor__toggle-pwd.login-batmotor__toggle-pwd--blueprint {
+  color: #002d5b !important;
+  background: transparent !important;
+}
+
+.login-batmotor--blueprint .login-batmotor__card--blueprint {
+  border: 1.5px solid #002d5b !important;
+  background: linear-gradient(
+    165deg,
+    rgba(255, 255, 255, 0.62) 0%,
+    rgba(236, 242, 248, 0.52) 50%,
+    rgba(248, 250, 252, 0.48) 100%
+  ) !important;
+  /* Largura ~420px como antes; padding vertical menor = menos “esticado” na altura */
+  width: min(26.25rem, calc(100vw - 2rem)) !important;
+  max-width: min(26.25rem, calc(100vw - 2rem)) !important;
+  border-radius: 3rem !important;
+  padding: 1.05rem 1.85rem 0.95rem !important;
+  box-shadow:
+    0 12px 40px rgba(0, 25, 55, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+}
+
+/* Cabeçalho: sem gap extra entre ícone e SVG de texto (viewBox do LOGO.svg já está recortado) */
+.login-batmotor--blueprint .login-batmotor__header--blueprint {
+  gap: 0 !important;
+  margin-bottom: clamp(0.95rem, 2.5vw, 1.2rem) !important;
+}
+
+.login-batmotor--blueprint .login-batmotor__logo-mark {
+  width: clamp(6.5rem, 24vw, 8.5rem) !important;
+  margin: 0 auto 0 !important;
+  display: block !important;
+}
+
+.login-batmotor--blueprint .login-batmotor__logo-type {
+  width: min(100%, 18.25rem) !important;
+  margin: -0.12rem auto 0 !important;
+  display: block !important;
+}
