@@ -32,7 +32,7 @@ API Express do BatMotor usando **PostgreSQL do Supabase** via `pg`.
 
 ## Variáveis Principais
 
-- `DATABASE_URL`: connection string do Supabase/PostgreSQL.
+- `DATABASE_URL`: connection string do Supabase/PostgreSQL. No Render, prefira a URL do **Connection Pooler** do Supabase para evitar falhas IPv6 (`ENETUNREACH`).
 - `JWT_SECRET`: segredo para assinar tokens.
 - `JWT_EXPIRES_IN`: validade do token, padrão `8h`.
 - `CORS_ORIGINS`: URL do frontend em produção, por exemplo `https://seu-front.onrender.com`.
@@ -67,6 +67,14 @@ Variáveis no Render:
 - `CORS_ALLOW_NETLIFY`: `true` se o front estiver na Netlify.
 
 Depois do deploy, copie a URL do Render, por exemplo `https://batmotor-api.onrender.com`, e coloque no frontend como `VITE_API_URL`.
+
+No Supabase, pegue a `DATABASE_URL` em **Project Settings → Database → Connection string → Transaction pooler**. O formato costuma ser:
+
+```env
+postgresql://postgres.PROJECT_REF:SENHA_URL_ENCODED@aws-0-REGION.pooler.supabase.com:6543/postgres
+```
+
+Se a senha tiver `@`, troque por `%40`.
 
 Teste rápido:
 

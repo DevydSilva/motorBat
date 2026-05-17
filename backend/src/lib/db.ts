@@ -1,6 +1,6 @@
 /**
  * PostgreSQL (pool `pg`) — compatível com Supabase via `DATABASE_URL`.
- * Opcionalmente aplica `sql/schema.sql` no arranque (BATMOTOR_RUN_SCHEMA, default true).
+ * Opcionalmente aplica `sql/schema.sql` no arranque quando BATMOTOR_RUN_SCHEMA=true.
  */
 import "dotenv/config";
 import { readFileSync } from "fs";
@@ -53,7 +53,7 @@ export async function connectDb(): Promise<void> {
       "[pg] Defina DATABASE_URL no .env (connection string PostgreSQL do Supabase)",
     );
   }
-  const runSchema = process.env.BATMOTOR_RUN_SCHEMA !== "false";
+  const runSchema = process.env.BATMOTOR_RUN_SCHEMA === "true";
   if (runSchema) {
     await ensureSchema();
   }
